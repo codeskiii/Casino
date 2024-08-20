@@ -4,7 +4,7 @@
     import { getCookie } from 'typescript-cookie';
     import { onMount } from 'svelte';
 
-    let user: string = "Login/Register";
+    let user = "Login/Register";
 
     async function user_collect() {
         const sessionID = getCookie('sessionID');
@@ -50,7 +50,7 @@
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav uk-visible@s">
             <li><a class="uk-text-large" style="font-size: 110%;" href="/">blank</a></li>
-            <li><a class="uk-text-large" style="font-size: 110%;" href="/">{ user }</a></li>
+            <li><a class="uk-text-large" style="font-size: 110%;" href="/profile">{ user }</a></li>
         </ul>
     </div>
 </nav>

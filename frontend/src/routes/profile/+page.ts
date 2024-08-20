@@ -1,13 +1,11 @@
 import type { Load } from '@sveltejs/kit';
 import { getCookie, setCookie } from 'typescript-cookie';
 
-const crypto = require('crypto');
-
-export const profilePageLoad: Load = async ({ fetch }) => {
+export const load: Load = async ({ fetch }) => {
     const sessionID = getCookie('sessionID');
 
     try {
-        if (sessionID != undefined) {
+        if (sessionID) {
             const response = await fetch('http://127.0.0.1:8000/check/', {
                 method: 'GET',
                 headers: {
@@ -16,27 +14,32 @@ export const profilePageLoad: Load = async ({ fetch }) => {
             });
 
             const data = await response.json();
-            if (data.test_passed === true) {
-                setCookie(sessionID, 'value', { expires: 1 });
-
+            if (data.test_passed) {
+                setCookie('sessionID', sessionID, { expires: 1 });
                 return {
-                    username: data.username
-                }
-
+                    props: {
+                        username: data.username
+                    }
+                };
             } else {
                 return {
+                    props: {
+                        get_new_session: true
+                    }
+                };
+            }
+        } else {
+            return {
+                props: {
                     get_new_session: true
                 }
-            }
-
-        } else {
-            // IDK I WILL DO IT IN FUTURE
+            };
         }
     } catch (error) {
-        console.error('Fetch error:', error); // Log or handle error appropriately
+        console.error('Fetch error:', error);
         return {
             props: {
-                error: 'An error occurred while fetching data.' // Optional: Return error information
+                error: 'An error occurred while fetching data.'
             }
         };
     }
