@@ -1,0 +1,107 @@
+{
+    "games": [
+      {
+        "id": 1,
+        "name": "Game 1",
+        "description": "A thrilling adventure game with high stakes and big rewards.",
+        "entry_cost": 10,
+        "cost_currency": 1,
+        "prize_multiplier": 5,
+        "cryptos": ["BTC", "ETH", "ADA"]
+      },
+      {
+        "id": 2,
+        "name": "Game 2",
+        "description": "A strategy game requiring skill and cunning to win.",
+        "entry_cost": 20,
+        "cost_currency": 1,
+        "prize_multiplier": 3,
+        "cryptos": ["BTC", "LTC", "BNB"]
+      },
+      {
+        "id": 3,
+        "name": "Game 3",
+        "description": "A fast-paced action game with a simple entry process.",
+        "entry_cost": 5,
+        "cost_currency": 1,
+        "prize_multiplier": 10,
+        "cryptos": ["ETH", "XRP", "SOL"]
+      },
+      {
+        "id": 4,
+        "name": "Game 4",
+        "description": "A puzzle game that challenges your brain and rewards clever solutions.",
+        "entry_cost": 15,
+        "cost_currency": 1,
+        "prize_multiplier": 2,
+        "cryptos": ["ADA", "DOT", "TRX"]
+      },
+      {
+        "id": 5,
+        "name": "Game 5",
+        "description": "A multiplayer game with competitive elements and team-based challenges.",
+        "entry_cost": 25,
+        "cost_currency": 1,
+        "prize_multiplier": 4,
+        "cryptos": ["BNB", "LTC", "LINK"]
+      }
+    ],
+    "lotteries": [
+      {
+        "id": 1,
+        "name": "Lottery 1",
+        "description": "A grand lottery with a massive jackpot and exciting draws.",
+        "prize": 500000,
+        "prize_currency": "USD",
+        "can_enter": true,
+        "last_draw": "2024-08-15",
+        "prize_withdraw_time": "2024-08-16T12:00:00Z",
+        "cryptos": ["BTC", "ETH", "XRP"]
+      },
+      {
+        "id": 2,
+        "name": "Lottery 2",
+        "description": "A weekly lottery with smaller prizes and frequent draws.",
+        "prize": 10000,
+        "prize_currency": "USD",
+        "can_enter": true,
+        "last_draw": "2024-08-14",
+        "prize_withdraw_time": "2024-08-15T12:00:00Z",
+        "cryptos": ["ETH", "LTC", "ADA"]
+      },
+      {
+        "id": 3,
+        "name": "Lottery 3",
+        "description": "A special event lottery with exclusive prizes and limited entries.",
+        "prize": 200000,
+        "prize_currency": "USD",
+        "can_enter": false,
+        "last_draw": "2024-07-30",
+        "prize_withdraw_time": "2024-07-31T12:00:00Z",
+        "cryptos": ["BTC", "SOL", "TRX"]
+      },
+      {
+        "id": 4,
+        "name": "Lottery 4",
+        "description": "A charity lottery where proceeds go to a good cause.",
+        "prize": 30000,
+        "prize_currency": "USD",
+        "can_enter": true,
+        "last_draw": "2024-08-01",
+        "prize_withdraw_time": "2024-08-02T12:00:00Z",
+        "cryptos": ["ADA", "DOT", "BNB"]
+      },
+      {
+        "id": 5,
+        "name": "Lottery 5",
+        "description": "A monthly lottery with a variety of prizes and exciting draws.",
+        "prize": 75000,
+        "prize_currency": "USD",
+        "can_enter": true,
+        "last_draw": "2024-08-10",
+        "prize_withdraw_time": "2024-08-11T12:00:00Z",
+        "cryptos": ["XRP", "LTC", "LINK"]
+      }
+    ]
+  }
+  

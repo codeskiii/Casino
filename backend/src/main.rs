@@ -4,48 +4,49 @@ use rocket::fairing::{Fairing, Info, Kind};
 use rocket::http::Header;
 use rocket::{Request, Response};
 
-#[derive(rocket::serde::Serialize)]
-struct GameSnippet {
+use rocket::serde::{json::Json, Deserialize, Serialize};
+use std::fs::File;
+use std::io::BufReader;
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Lottery {
     id: u16,
     name: String,
     description: String,
+    prize: u64,
+    prize_currency: String,
+    can_enter: bool,
+    last_draw: String,
+    prize_withdraw_time: String,
     cryptos: Vec<String>,
 }
 
-#[derive(rocket::serde::Serialize)]
-struct LotterySnippet {
+#[derive(Debug, Deserialize, Serialize)]
+struct Game {
     id: u16,
     name: String,
     description: String,
-    cost: u8,
+    entry_cost: u8,
+    cost_currency: u8,
     prize_multiplier: u8,
     cryptos: Vec<String>,
 }
 
-#[derive(rocket::serde::Serialize)]
-struct IndexPage {
-    games: Vec<GameSnippet>,
-    lotteries: Vec<LotterySnippet>,
+#[derive(Debug, Deserialize, Serialize)]
+struct MainPage {
+    games: Vec<Game>,
+    lotteries: Vec<Lottery>,
 }
 
 #[get("/")]
-fn get_home_page() -> rocket::serde::json::Json<IndexPage> {
-    rocket::serde::json::Json(IndexPage {
-        games: vec![GameSnippet {
-            id: 1,
-            name: "Game One".to_string(),
-            description: "Description of game one".to_string(),
-            cryptos: vec!["Crypto1".to_string(), "Crypto2".to_string()],
-        }],
-        lotteries: vec![LotterySnippet {
-            id: 1,
-            name: "Lottery One".to_string(),
-            description: "Description of lottery one".to_string(),
-            cost: 10,
-            prize_multiplier: 2,
-            cryptos: vec!["Crypto1".to_string(), "Crypto2".to_string()],
-        }],
-    })
+fn get_home_page() -> Json<MainPage> {
+    let file = File::open("../datastuff/data/mainpage.json").expect("Failed to open file");
+    println!("File read");
+    let reader = BufReader::new(file);
+    
+    let main_page: MainPage = serde_json::from_reader(reader).expect("Failed to deserialize JSON");
+
+    Json(main_page)
 }
 
 pub struct CORS;
