@@ -25,6 +25,7 @@
   "type": "module",
   "dependencies": {
     "@types/materialize-css": "^1.0.14",
+    "crypto": "^1.0.1",
     "flowbite-svelte": "^0.46.15",
     "materialize-css": "^1.0.0",
     "typescript-cookie": "^1.0.6",
