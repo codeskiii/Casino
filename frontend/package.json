@@ -27,6 +27,7 @@
     "@types/materialize-css": "^1.0.14",
     "flowbite-svelte": "^0.46.15",
     "materialize-css": "^1.0.0",
+    "typescript-cookie": "^1.0.6",
     "uikit": "^3.21.9"
   },
   "description": "NAH",
