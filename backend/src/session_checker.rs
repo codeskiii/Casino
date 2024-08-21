@@ -1,36 +1,46 @@
 use rocket::serde::{json::Json, Deserialize, Serialize};
 use rocket::{get, Request, State};
 use std::collections::HashMap;
+use std::sync::Mutex;
 
 mod user_manager;
 
 #[derive(Deserialize, Serialize)]
-struct CheckResponse {
-    test_passed: bool,
-    user: Option<user_manager::User>,  // `Option` in case user is not found
+pub struct CheckResponse {
+    pub test_passed: bool,
+    pub user: Option<user_manager::User>,  // `Option` in case user is not found
 }
 
-struct Session {
-    user: user_manager::User,
+#[derive(Clone)]
+pub struct Session {
+    pub user: user_manager::User,
 }
 
-struct SessionStorage {
-    sessions: HashMap<u64, Session>,
+pub struct SessionStorage {
+    pub sessions: Mutex<HashMap<u64, Session>>,
 }
 
-#[get("/check/")]
+impl SessionStorage {
+    pub fn new() -> Self {
+        SessionStorage {
+            sessions: Mutex::new(HashMap::new()),
+        }
+    }
+}
+
+#[get("/check")]
 pub fn check(request: &Request<'_>, session_storage: &State<SessionStorage>) -> Json<CheckResponse> {
     let session_id = match request.headers().get_one("Session") {
         Some(id_str) => match id_str.parse::<u64>() {
             Ok(id) => id,
-            Err(_) => return Json(CheckResponse { test_passed: false, 
-                                                  user: None }),
+            Err(_) => return Json(CheckResponse { test_passed: false, user: None }),
         },
-        None => return Json(CheckResponse { test_passed: false, 
-                                            user: None }),
+        None => return Json(CheckResponse { test_passed: false, user: None }),
     };
 
-    match session_storage.sessions.get(&session_id) {
+    let sessions = session_storage.sessions.lock().unwrap();
+
+    match sessions.get(&session_id) {
         Some(session) => Json(CheckResponse { 
             test_passed: true, 
             user: Some(session.user.clone()), 

@@ -1,7 +1,7 @@
-
 use rocket::serde::{json::Json, Deserialize, Serialize};
 use std::fs::File;
-use std::io::BufReader;
+use std::io::{self, BufReader};
+use std::path::Path;
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Lottery {
@@ -34,12 +34,26 @@ struct MainPage {
 }
 
 #[get("/")]
-pub fn get_home_page() -> Json<MainPage> {
-    let file = File::open("../datastuff/data/mainpage.json").expect("Failed to open file");
-    println!("File read");
-    let reader = BufReader::new(file);
-    
-    let main_page: MainPage = serde_json::from_reader(reader).expect("Failed to deserialize JSON");
+pub fn get_home_page() -> Result<Json<MainPage>, io::Error> {
+    let path = Path::new("../datastuff/data/mainpage.json");
 
-    Json(main_page)
+    if !path.exists() {
+        eprintln!("Error: File {:?} does not exist", path);
+        return Err(io::Error::new(io::ErrorKind::NotFound, "File not found"));
+    }
+
+    let file = File::open(&path)?;
+    println!("File read successfully");
+
+    let reader = BufReader::new(file);
+
+    let main_page: MainPage = match serde_json::from_reader(reader) {
+        Ok(data) => data,
+        Err(e) => {
+            eprintln!("Failed to deserialize JSON: {}", e);
+            return Err(io::Error::new(io::ErrorKind::InvalidData, "Failed to deserialize JSON"));
+        }
+    };
+
+    Ok(Json(main_page))
 }
