@@ -23,9 +23,11 @@ pub fn check(request: &Request<'_>, session_storage: &State<SessionStorage>) -> 
     let session_id = match request.headers().get_one("Session") {
         Some(id_str) => match id_str.parse::<u64>() {
             Ok(id) => id,
-            Err(_) => return Json(CheckResponse { test_passed: false, user: None }),
+            Err(_) => return Json(CheckResponse { test_passed: false, 
+                                                  user: None }),
         },
-        None => return Json(CheckResponse { test_passed: false, user: None }),
+        None => return Json(CheckResponse { test_passed: false, 
+                                            user: None }),
     };
 
     match session_storage.sessions.get(&session_id) {
