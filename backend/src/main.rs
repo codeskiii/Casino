@@ -5,6 +5,8 @@ use rocket::http::Header;
 use rocket::{Request, Response};
 
 mod main_page;
+mod session_checker;
+mod user_manager;
 
 struct Session {
     id : u64,
@@ -38,6 +40,14 @@ impl Fairing for CORS {
 fn rocket() -> _ {
     let session_storage = SessionStorage::new();
     rocket::build()
+        // UserStorage instance
+        .manage(user_manager::UserStorage::new())
+        // SessionStorage instance
+        .manage(session_checker::SessionStorage::new())
+        // index
         .mount("/", routes![main_page::get_home_page])
-        .attach(CORS) // CORS :D
+        // session checker
+        .mount("/", routes![session_checker::check])
+        // CORS :D (CROSS ORIGIN SMTH IDK)
+        .attach(CORS)
 }
