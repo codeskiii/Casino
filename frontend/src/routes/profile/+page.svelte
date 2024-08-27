@@ -6,10 +6,11 @@ export let load;
 </script>
 
     <!-- Kontener z danymi użytkownika -->
+    <!-- do implementacji dynamicznej-->
     <div class="uk-container uk-margin-top">
         <h1 class="uk-heading-medium">Jan Kowalski</h1>
         <p class="uk-text-lead">Programista Webowy</p>
-        <div class="uk-grid-match uk-child-width-expand@s" uk-grid>
+        <div class="uk-grid-match uk-child-width-expand@s">
             <div>
                 <div class="uk-card uk-card-default uk-card-body">
                     <h3 class="uk-card-title">Informacje Kontaktowe</h3>
