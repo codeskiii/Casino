@@ -3,7 +3,6 @@ use rocket::{get, State};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-use rocket::request::{self, Request, FromRequest};
 
 use crate::user_manager;
 
@@ -25,7 +24,7 @@ pub struct SessionStorage {
 impl SessionStorage {
     pub fn new() -> Self {
         let session_box: HashMap<u64, Session> = HashMap::new();
-        
+
         SessionStorage {
             sessions: Mutex::new(session_box),
         }

@@ -4,7 +4,6 @@ use std::collections::HashMap;
 use std::sync::Mutex;
 
 use std::io::{self, BufReader};
-use rocket::request::{self, Request, FromRequest};
 use std::fs::File;
 
 use std::path::Path;
@@ -52,7 +51,7 @@ pub fn register_page(_state: &State<UserStorage>) -> Json<Response> {
 }
 
 pub fn load_box() -> Result<UserStorage, io::Error>  {
-    let path = Path::new("../datastuff/data/mainpage.json");
+    let path = Path::new("../datastuff/data/usersStorage.json");
 
     if !path.exists() {
         eprintln!("Error: File {:?} does not exist", path);

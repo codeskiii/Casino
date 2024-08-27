@@ -1,7 +1,6 @@
 use rocket::serde::{json::Json, Deserialize, Serialize};
 use std::fs::File;
 use std::io::{self, BufReader};
-use rocket::request::{self, Request, FromRequest};
 use std::path::Path;
 
 #[derive(Debug, Deserialize, Serialize)]

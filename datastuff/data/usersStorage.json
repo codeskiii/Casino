@@ -1,0 +1,8 @@
+{
+    "users": {
+        "user1": {
+            "username": "user1",
+            "passwd_hash": "a50705f7524cf9ba8dcc9d3e56e2153c5baf31be"
+        }
+    }
+}

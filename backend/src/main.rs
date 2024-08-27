@@ -3,7 +3,6 @@
 use rocket::fairing::{Fairing, Info, Kind};
 use rocket::http::Header;
 use rocket::{Request, Response};
-use std::collections::HashMap;
 
 mod main_page;
 mod session_checker;
@@ -48,6 +47,8 @@ fn rocket() -> _ {
         .mount("/", routes![main_page::get_home_page])
         // session checker
         .mount("/", routes![session_checker::check])
+        // logging page
+        .mount("/", routes![user_manager::login_page])
         // CORS :D (CROSS ORIGIN SMTH IDK)
         .attach(CORS)
 }
