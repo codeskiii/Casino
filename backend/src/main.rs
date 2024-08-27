@@ -3,6 +3,7 @@
 use rocket::fairing::{Fairing, Info, Kind};
 use rocket::http::Header;
 use rocket::{Request, Response};
+use std::collections::HashMap;
 
 mod main_page;
 mod session_checker;
@@ -38,7 +39,6 @@ impl Fairing for CORS {
 
 #[launch]
 fn rocket() -> _ {
-    let session_storage = SessionStorage::new();
     rocket::build()
         // UserStorage instance
         .manage(user_manager::UserStorage::new())

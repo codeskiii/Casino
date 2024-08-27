@@ -1,10 +1,11 @@
 use rocket::serde::{json::Json, Deserialize, Serialize};
 use std::fs::File;
 use std::io::{self, BufReader};
+use rocket::request::{self, Request, FromRequest};
 use std::path::Path;
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Lottery {
+pub struct Lottery {
     id: u16,
     name: String,
     description: String,
@@ -17,7 +18,7 @@ struct Lottery {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Game {
+pub struct Game {
     id: u16,
     name: String,
     description: String,
@@ -28,7 +29,7 @@ struct Game {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct MainPage {
+pub struct MainPage {
     games: Vec<Game>,
     lotteries: Vec<Lottery>,
 }

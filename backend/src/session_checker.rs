@@ -1,9 +1,11 @@
 use rocket::serde::{json::Json, Deserialize, Serialize};
-use rocket::{get, Request, State};
+use rocket::{get, State};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-mod user_manager;
+use rocket::request::{self, Request, FromRequest};
+
+use crate::user_manager;
 
 #[derive(Deserialize, Serialize)]
 pub struct CheckResponse {
@@ -22,24 +24,20 @@ pub struct SessionStorage {
 
 impl SessionStorage {
     pub fn new() -> Self {
+        let session_box: HashMap<u64, Session> = HashMap::new();
+        
         SessionStorage {
-            sessions: Mutex::new(HashMap::new()),
+            sessions: Mutex::new(session_box),
         }
     }
 }
 
-#[get("/check")]
-pub fn check(request: &Request<'_>, session_storage: &State<SessionStorage>) -> Json<CheckResponse> {
-    let session_id = match request.headers().get_one("Session") {
-        Some(id_str) => match id_str.parse::<u64>() {
-            Ok(id) => id,
-            Err(_) => return Json(CheckResponse { test_passed: false, user: None }),
-        },
-        None => return Json(CheckResponse { test_passed: false, user: None }),
-    };
-
+#[get("/check/<session_id>")]
+pub fn check(session_id: u64, session_storage: &State<SessionStorage>) -> Json<CheckResponse> {
+    // Lock the session storage to safely access the sessions map
     let sessions = session_storage.sessions.lock().unwrap();
 
+    // Check if a session with the given ID exists
     match sessions.get(&session_id) {
         Some(session) => Json(CheckResponse { 
             test_passed: true, 
